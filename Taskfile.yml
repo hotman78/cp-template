@@ -1,0 +1,127 @@
+version: "3"
+
+tasks:
+  dependency:
+    desc: "task dependency -- (URL)"
+    cmds:
+      - sudo apt update
+      - sudo apt install -y git
+      - echo 'Installing dependencies...'
+      - curl -LsSf https://astral.sh/uv/install.sh | sh
+      - uv tool install online-judge-tools
+      - uv tool install oj-bundle
+      - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      - rustup install stable
+      - cargo install pahcer
+
+  makeup:
+    desc: "task makeup"
+    cmds:
+      - |
+        mkdir -p .ahc .build library src
+        touch main.cpp input.txt output.txt username
+        if [ ! -e ./ac-library ]; then
+          git clone https://github.com/atcoder/ac-library.git
+        fi
+  build:
+    cmds:
+      - g++ -std=c++20 -O2 -Iac-library/ main.cpp -o .build/a.out
+  run:
+    aliases:
+      - r
+    deps: [build]
+    cmds:
+      - .build/a.out <input.txt >output.txt && cat output.txt
+  add-sample:
+    aliases:
+      - add
+    desc: "task add-sample -- (URL)"
+    cmds:
+      - str = `date "+%Y_%m_%d_%H_%M_%S"`
+      - cp input.txt test/user_${str}.in
+      - cp output.txt test/user_${str}.out
+
+  download:
+    aliases:
+      - dl
+    desc: "task download -- (URL)"
+    cmds:
+      - rm -rf test
+      - oj dl {{.CLI_ARGS}}
+  test:
+    aliases:
+      - t
+    desc: "task test -- (URL)"
+    deps: [build]
+    cmds:
+      - oj t -e 1e-6 -c .build/a.out
+  submit:
+    aliases:
+      - s
+    deps: [out]
+    cmds:
+      - echo "この機能はコンテスト中の提出のみサポートします"
+      - oj s {{.CLI_ARGS}} output.cpp
+  t-r:
+    deps: [build]
+    cmds:
+      - g++ -O2 -Ilibrary -Iac-library/ scripts/reactive.cpp -o reactive
+      - oj test-reactive -c .build/a.out .build/reactive
+  login:
+    cmds:
+      - oj login https://atcoder.jp/
+  login-cli:
+    cmds:
+      - oj login -u `cat username.txt` https://atcoder.jp/
+  output:
+    aliases:
+      - out
+    desc: "task output"
+    deps: [build]
+    cmds:
+      - |
+        rm -f output.cpp
+        oj-bundle -I. -Iac-library/ main.cpp >.build/temp.cpp
+        cd ac-library 
+        uv run expander.py ../.build/temp.cpp
+        cd -
+        touch output.cpp
+        echo "// auther: $(cat username)" >> output.cpp
+        echo "// hash: $(md5sum main.cpp | head -6c)" >> output.cpp
+        echo "// ---raw code------" >> output.cpp
+        cat main.cpp | sed 's/^/\/\/ /' >> output.cpp
+        echo -e "\n// -----------------" >> output.cpp
+        cat ac-library/combined.cpp >> output.cpp
+        chmod -w output.cpp
+        rm ac-library/combined.cpp .build/temp.cpp
+  ahc-*-*:
+    desc: "task ahc-ahc000-min -- (URL)"
+    vars:
+      ARG_1: "{{index .MATCH 0}}"
+      ARG_2: "{{index .MATCH 1}}"
+    dir: .ahc
+    cmds:
+      - cd .. && rm -rf .ahc && mkdir .ahc
+      - wget {{.CLI_ARGS}}
+      - unzip -o `basename {{.CLI_ARGS}}`
+      - pahcer init -i -p {{.ARG_1}} -o {{.ARG_2}} -l cpp
+  ahc-test:
+    deps: [out]
+    cmds:
+      - rm -f .ahc/main.cpp
+      - cp output.cpp .ahc/main.cpp
+      - cd .ahc && pahcer run
+  ahc-vis:
+    deps: [out]
+    cmds:
+      - zsh -c 'cd .ahc/tools && for f (in/*.txt) {cargo run -r --bin vis in/$f:t out/$f:t && cp vis.html vis/$f:t:r.html}'
+  ahc-run:
+    deps: []
+    cmds:
+      - task ahc-test
+      - task ahc-vis
+  ahc-optuna:
+    deps: [out]
+    cmds:
+      - cd .ahc
+      - uv run optimize.py
