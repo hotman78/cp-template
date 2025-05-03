@@ -44,31 +44,6 @@ task login
 [SUCCESS] You have already signed in.
 ```
 
-## 補足
-
-このコマンドでは下記を実行しています ↓
-
-```bash
-mkdir -p ~/.local
-sudo chown -R $USER:$USER ~/.local
-chmod 700 ~/.local
-echo 'Installing dependencies...'
-read -p 'ユーザー名を入力して下さい: ' input
-read -p '作成するフォルダの名前を入力してください: ' folder
-sudo apt update && sudo apt install -y curl git build-essential
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source ~/.local/bin/env
-uv tool install online-judge-tools --with setuptools
-uv tool install online-judge-verify-helper --with setuptools
-uv tool install aclogin
-sudo sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
-source ~/.local/bin/env
-git clone https://github.com/hotman78/cp-template.git $folder
-cd $folder
-task setup -- $input
-echo 'source ~/.local/bin/env' >> ~/.bashrc
-```
-
 # 使用方法
 
 コマンドはターミナルから実行します。ターミナルは vscode 上で `Ctrl+j` を入力することでターミナルを出せます
