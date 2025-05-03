@@ -17,20 +17,19 @@
 インストールするのは以下のコマンドで可能です
 
 ```bash
-curl -LsSf https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/90e81d7910a1f2f29ee1e9f7d63f4480ae83814b/install-cp-template.sh | sh
+sh -c "$(curl --location https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/41415796c61b3480d86133c7c739dc8fed874426/install-cp-template.sh)"
 ```
 
 ```
 
 ```
+
 このコマンドでは下記を実行しています ↓
 
 ```bash
 echo 'Installing dependencies...'
-echo 'ユーザー名を入力して下さい'
-read input
-echo '作成するフォルダの名前を入力してください'
-read folder
+read -p 'ユーザー名を入力して下さい: ' input
+read -p '作成するフォルダの名前を入力してください: ' folder
 sudo apt update && sudo apt install -y curl git build-essential
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.local/bin/env
@@ -39,9 +38,18 @@ uv tool install online-judge-verify-helper --with setuptools
 sudo sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
 source ~/.local/bin/env
 git clone https://github.com/hotman78/cp-template.git $folder
-cd cp-template
+cd $folder
 task setup -- $input
+task login
 ```
+
+その後、vscode にて作成したフォルダの中に入りターミナルから
+
+```bash:
+  task r
+```
+
+と入力して `Hello World` が出れば成功です
 
 # 使用方法
 
