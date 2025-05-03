@@ -2,6 +2,9 @@
 
 本テンプレートは以下に依存しておりますが、後述コマンドで全部入るはずです
 
+- curl
+- git
+- build-essential
 - taskfile
 - uv
   - online-judge-tools
@@ -9,14 +12,23 @@
 - cargo
   - pahcer
 
-##
+## インストールスクリプト
 
-sudo apt update && sudo apt install git
+```bash
+echo 'Installing dependencies...'
+
+sudo apt update && sudo apt install curl git build-essential
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.local/bin/env
+uv tool install online-judge-tools
+uv tool install online-judge-verify-helper
 sudo sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
 source ~/.local/bin/env
 git clone https://github.com/hotman78/cp-template.git
 cd cp-template
-task dependency
+task setup
+
+```
 
 # 使用方法
 

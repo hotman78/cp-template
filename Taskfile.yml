@@ -5,25 +5,20 @@ tasks:
     desc: "task dependency"
     cmds:
       - |
-        echo 'Installing dependencies...'
-        # sudo apt install -y build-essential
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        source ~/.local/bin/env
-        uv tool install online-judge-tools
-        uv tool install online-judge-verify-helper
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+        # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
         # source ~/.cargo/env
         # rustup install stable
         # cargo install pahcer
 
-  makeup:
-    desc: "task makeup"
+  setup:
+    desc: "task setup"
     cmds:
       - |
         mkdir -p .ahc .build library src
         touch main.cpp input.txt output.txt username
         cp template/template.hpp library/template.hpp
-        cp template/main.cpp main.cpp
+        cp template/main-temp.cpp main.cpp
         if [ ! -e ./ac-library ]; then
           git clone https://github.com/atcoder/ac-library.git
         fi
