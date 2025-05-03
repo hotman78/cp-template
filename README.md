@@ -20,10 +20,6 @@
 sh -c "$(curl --location https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/41415796c61b3480d86133c7c739dc8fed874426/install-cp-template.sh)"
 ```
 
-```
-
-```
-
 このコマンドでは下記を実行しています ↓
 
 ```bash
