@@ -6,17 +6,13 @@ tasks:
     cmds:
       - |
 
-        # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-        # source ~/.cargo/env
-        # rustup install stable
-        # cargo install pahcer
-
   setup:
-    desc: "task setup"
+    desc: "task setup -- (username)"
     cmds:
       - |
         mkdir -p .ahc .build library src
         touch main.cpp input.txt output.txt username
+        echo {{.CLI_ARGS}} >> username
         cp template/template.hpp library/template.hpp
         cp template/main-temp.cpp main.cpp
         if [ ! -e ./ac-library ]; then

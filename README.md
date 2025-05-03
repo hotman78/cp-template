@@ -14,20 +14,33 @@
 
 ## インストールスクリプト
 
+インストールするのは以下のコマンドで可能です
+
+```bash
+curl -LsSf https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/90e81d7910a1f2f29ee1e9f7d63f4480ae83814b/install-cp-template.sh | sh
+```
+
+```
+
+```
+このコマンドでは下記を実行しています ↓
+
 ```bash
 echo 'Installing dependencies...'
-
-sudo apt update && sudo apt install curl git build-essential
+echo 'ユーザー名を入力して下さい'
+read input
+echo '作成するフォルダの名前を入力してください'
+read folder
+sudo apt update && sudo apt install -y curl git build-essential
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.local/bin/env
-uv tool install online-judge-tools
-uv tool install online-judge-verify-helper
+uv tool install online-judge-tools --with setuptools
+uv tool install online-judge-verify-helper --with setuptools
 sudo sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
 source ~/.local/bin/env
-git clone https://github.com/hotman78/cp-template.git
+git clone https://github.com/hotman78/cp-template.git $folder
 cd cp-template
-task setup
-
+task setup -- $input
 ```
 
 # 使用方法
@@ -101,3 +114,7 @@ int main(){
 
 リアクティブ問題のテストは script/reactive.cpp にジャッジ側のコードを書きます
 main.cpp の出力が script/reactive.cpp の入力になり script/reactive.cpp の入力が main.cpp の入力になります
+
+## AHC
+
+いずれ書く...
