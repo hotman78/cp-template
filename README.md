@@ -1,10 +1,22 @@
 # 依存関係
 
-本テンプレートは以下に依存しております
+本テンプレートは以下に依存しておりますが、後述コマンドで全部入るはずです
 
 - taskfile
 - uv
+  - online-judge-tools
+  - oj-verify
 - cargo
+  - pahcer
+
+##
+
+sudo apt update && sudo apt install git
+sudo sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
+source ~/.local/bin/env
+git clone https://github.com/hotman78/cp-template.git
+cd cp-template
+task dependency
 
 # 使用方法
 
@@ -72,3 +84,8 @@ int main(){
 }
 
 ```
+
+## リアクティブ
+
+リアクティブ問題のテストは script/reactive.cpp にジャッジ側のコードを書きます
+main.cpp の出力が script/reactive.cpp の入力になり script/reactive.cpp の入力が main.cpp の入力になります
