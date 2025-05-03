@@ -17,7 +17,7 @@
 インストールするのは以下のコマンドで可能です
 
 ```bash
-bash -c "$(curl --location https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/e2e34d408ffbefe8a8c784033060f598bdcc3f61/install-cp-template.sh)" && source ~/.local/bin/env
+bash -c "$(curl --location https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/a093e43c177f7f152c6d680b887f7ae9f26d5f35/install-cp-template.sh)" && source ~/.local/bin/env
 ```
 
 このコマンドでは下記を実行しています ↓
