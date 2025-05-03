@@ -20,6 +20,32 @@
 bash -c "$(curl --location https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/a093e43c177f7f152c6d680b887f7ae9f26d5f35/install-cp-template.sh)" && source ~/.local/bin/env
 ```
 
+またその後、こちらに沿って atcoder にログインしてください
+
+https://github.com/key-moon/aclogin
+
+その後、vscode にて作成したフォルダの中に入りターミナルから
+
+```bash:
+  task r
+```
+
+と入力して `Hello World` が出れば成功です
+
+```bash:
+task login
+```
+
+としてログイン出来てるかも確認してください
+出来ている場合以下のような記述がでます
+
+```
+[NETWORK] 200 OK
+[SUCCESS] You have already signed in.
+```
+
+## 補足
+
 このコマンドでは下記を実行しています ↓
 
 ```bash
@@ -42,24 +68,6 @@ cd $folder
 task setup -- $input
 echo 'source ~/.local/bin/env' >> ~/.bashrc
 ```
-
-またその後、こちらに沿って atcoder にログインしてください
-
-https://github.com/key-moon/aclogin
-
-その後、vscode にて作成したフォルダの中に入りターミナルから
-
-```bash:
-  task r
-```
-
-と入力して `Hello World` が出れば成功です
-
-```bash:
-task login
-```
-
-としてログイン出来てるかも確認してください
 
 # 使用方法
 
