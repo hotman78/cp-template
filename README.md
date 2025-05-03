@@ -17,12 +17,15 @@
 インストールするのは以下のコマンドで可能です
 
 ```bash
-sh -c "$(curl --location https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/41415796c61b3480d86133c7c739dc8fed874426/install-cp-template.sh)"
+bash -c "$(curl --location https://gist.githubusercontent.com/hotman78/74b84c4480b98e6426a602c9b8a2d274/raw/e2e34d408ffbefe8a8c784033060f598bdcc3f61/install-cp-template.sh)" && source ~/.local/bin/env
 ```
 
 このコマンドでは下記を実行しています ↓
 
 ```bash
+mkdir -p ~/.local
+sudo chown -R $USER:$USER ~/.local
+chmod 700 ~/.local
 echo 'Installing dependencies...'
 read -p 'ユーザー名を入力して下さい: ' input
 read -p '作成するフォルダの名前を入力してください: ' folder
@@ -31,13 +34,18 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.local/bin/env
 uv tool install online-judge-tools --with setuptools
 uv tool install online-judge-verify-helper --with setuptools
+uv tool install aclogin
 sudo sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
 source ~/.local/bin/env
 git clone https://github.com/hotman78/cp-template.git $folder
 cd $folder
 task setup -- $input
-task login
+echo 'source ~/.local/bin/env' >> ~/.bashrc
 ```
+
+またその後、こちらに沿って atcoder にログインしてください
+
+https://github.com/key-moon/aclogin
 
 その後、vscode にて作成したフォルダの中に入りターミナルから
 
@@ -46,6 +54,12 @@ task login
 ```
 
 と入力して `Hello World` が出れば成功です
+
+```bash:
+task login
+```
+
+としてログイン出来てるかも確認してください
 
 # 使用方法
 

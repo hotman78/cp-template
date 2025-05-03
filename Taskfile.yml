@@ -1,11 +1,6 @@
 version: "3"
 
 tasks:
-  dependency:
-    desc: "task dependency"
-    cmds:
-      - |
-
   setup:
     desc: "task setup -- (username)"
     cmds:
